@@ -31,14 +31,6 @@ class Inventory
       #hit the inventory item to the hash
       @inventory[inventory_key] = inventory_item
 
-      # puts "replenish &&&&&&&&&&&&"
-      # puts inventory_key
-      # puts @inventory[inventory_key]
-      # puts "&&&&&&&&&&&&"
-
-      # puts "&&&&&&&&&&&&"
-      # puts @inventory[inventory_key].quantity
-      # puts "&&&&&&&&&&&&"
     end
   end
 
@@ -48,10 +40,20 @@ class Inventory
       @inventory[inventory_key].quantity -= 1
       # puts "One #{item} is sold."
 
+
+      if @inventory[inventory_key].quantity <= @inventory[inventory_key].warning_threshold
+        @inventory[inventory_key].state = State.new("Low stock")
+        puts
+        puts "Warning_threshold: In Location #{@inventory[inventory_key].location.name}"
+        puts "Inventory for the #{@inventory[inventory_key].item.name} IS #{@inventory[inventory_key].quantity}  IT IS LOW!!!!!"
+        puts
+      end
+
+
       if @inventory[inventory_key].quantity == 0
         @inventory[inventory_key].state = State.new("Out of stock")
         out_of_stock = true
-        puts "In Location #{@inventory[inventory_key].location.name} inventory for the #{@inventory[inventory_key].item.name} becomes empty"
+      puts "   ATTENTION In Location #{@inventory[inventory_key].location.name} inventory for the #{@inventory[inventory_key].item.name} becomes empty"
 
       end
     # end
@@ -66,16 +68,7 @@ class Inventory
     state = State.new("Available")  #Change this line later
     inventory_key = [item_name, location_name, state.status]
 
-    # puts "sell item&&&&&&&&&&&&"
-    # puts inventory_key
-    # puts "&&&&&&&&&&&&"
-    # puts @inventory[inventory_key].class
-    # puts @inventory[inventory_key]
-
     if @inventory[inventory_key].class.to_s == "InventoryItem" && @inventory[inventory_key].quantity > 0
-      #first ship the item
-      # puts ship_item(@inventory[inventory_key].location , @inventory[inventory_key].item )
-      #after remove the item from inventory
       remove_from_inventory(inventory_key )
     end
 
