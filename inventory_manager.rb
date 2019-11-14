@@ -50,6 +50,7 @@ im = InventoryManager.new
 #creates company's inventory
 company_inventory = Inventory.new
 
+
 # define locations with an address
 
 
@@ -65,6 +66,9 @@ a = gets.chomp
 im.define_location(DropShipper.new("DropShipperOttawa", Address.new(436, "Harvest Ave", "K4A OV6", "Ottawa", "ON", "Canada")))
 im.define_location(Warehouse.new("Orleans Warehousing", Address.new(123, "Esprit Street", "K1J 2V3", "Ottawa", "ON", "Canada")))
 
+ company_inventory.inventory_locations = im.locations
+ # puts "Manager locations #{im.locations}"
+ # puts "Inventory locations #{company_inventory.inventory_locations}"
 # read item information from file to load them to a location
 im.define_new_item_serie("./itemsTV.text", ";")
 
